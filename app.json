@@ -3,7 +3,7 @@
     "name": "meals_to_go",
     "slug": "meals_to_go",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {

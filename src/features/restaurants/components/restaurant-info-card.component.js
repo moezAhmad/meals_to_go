@@ -1,11 +1,17 @@
 import React from "react";
-import { Image, View, Text } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
-import styled from "styled-components";
+import { Card } from "react-native-paper";
 import { SvgXml } from "react-native-svg";
 import star from "../../../../assets/star.js";
 import open from "../../../../assets/open";
 import { Spacer } from "../../../components/spacer/spacer.component.js";
+import { Text } from "../../../components/typography/text.component.js";
+import {
+  Icon,
+  Ratings,
+  RestaurantCard,
+  Section,
+  SectionEnd,
+} from "./restaurant-info-card.styles.js";
 export const RestaurantInfoCard = ({ restaurant = {} }) => {
   const {
     name = "Some Restaurant",
@@ -16,30 +22,15 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
     rating = 4,
     isClosedTemporarily = true,
   } = restaurant;
-  const RestaurantTitle = styled(Title)`
-    font-family: ${({ theme }) => theme.fonts.heading};
-    font-weight: ${({ theme }) => theme.fontWeights.bold};
-  `;
-  const Ratings = styled.View`
-    flex-direction: row;
-    padding-top: ${({ theme }) => theme.space[2]};
-    padding-bottom: ${({ theme }) => theme.space[2]};
-  `;
-  const Section = styled.View`
-    flex-direction: row;
-    align-items: center;
-  `;
-  const SectionEnd = styled.View`
-    flex: 1;
-    z-index: 100;
-    flex-direction: row-reverse;
-  `;
+
   const ratingArray = Array.from(new Array(Math.floor(rating)));
   return (
-    <Card>
+    <RestaurantCard elevation={5}>
       <Card.Content>
         <Card.Cover source={{ uri: photos[0] }} />
-        <RestaurantTitle>{name}</RestaurantTitle>
+        <Spacer position="top" size="large">
+          <Text variant="label">{name}</Text>
+        </Spacer>
         <Section>
           <Ratings>
             {ratingArray.map((item, id) => (
@@ -49,18 +40,17 @@ export const RestaurantInfoCard = ({ restaurant = {} }) => {
           <SectionEnd>
             {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
             <Spacer position="right" size="large">
-              <Image style={{ width: 20, height: 20 }} source={{ uri: icon }} />
+              <Icon source={{ uri: icon }} />
             </Spacer>
             <Spacer position="right" size="large">
               {isClosedTemporarily && (
-                <Text style={{ color: "red" }}>Closed Temporarily</Text>
+                <Text variant="error">Closed Temporarily</Text>
               )}
             </Spacer>
           </SectionEnd>
         </Section>
-
-        <Paragraph>{address}</Paragraph>
+        <Text>{address}</Text>
       </Card.Content>
-    </Card>
+    </RestaurantCard>
   );
 };
