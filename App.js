@@ -13,8 +13,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeArea } from "./src/components/utility/safe-area.component";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { restaurantsRequest } from "./src/services/restaurants/restaurants.service";
-
+import { RestaurantsProvider } from "./src/services/restaurants/restaurants.context";
 const TAB_ICON = {
   Restaurants: "md-restaurant",
   Map: "md-map",
@@ -55,18 +54,24 @@ export default function App() {
     Lato_400Regular,
   });
   if (!oswaldLoaded || !latoLoaded) {
-    return <Text>Loading</Text>;
+    return (
+      <SafeArea>
+        <Text>Settings!</Text>
+      </SafeArea>
+    );
   }
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator screenOptions={createScreenOptions}>
-            <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
-            <Tab.Screen name="Map" component={MapScreen} />
-            <Tab.Screen name="Settings" component={SettingsScreen} />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <RestaurantsProvider>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={createScreenOptions}>
+              <Tab.Screen name="Restaurants" component={RestaurantsScreen} />
+              <Tab.Screen name="Map" component={MapScreen} />
+              <Tab.Screen name="Settings" component={SettingsScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantsProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
